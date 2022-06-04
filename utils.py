@@ -81,3 +81,5 @@ def evaluate_model(model):
 
 def check_score():
 
+    print('temp')
+
