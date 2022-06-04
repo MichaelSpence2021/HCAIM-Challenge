@@ -1,10 +1,10 @@
 import snsynth
 import pandas as pd
 
-def get_generator(generator, epsilon):
+def get_generator(generator, epsilon, training_samples=10000):
 
     data = pd.read_csv("./HCAIM_Challenge/data/res_train.csv")
-    data = data.sample(100)
+    data = data.sample(training_samples)
 
     # Ensure that generator is one of the accepted methods
     if generator not in ['MWEM','PATE-CTGAN','DP-CTGAN']:
