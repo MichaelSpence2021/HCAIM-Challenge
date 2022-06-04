@@ -4,6 +4,7 @@ import pandas as pd
 def get_generator(generator, epsilon):
 
     data = pd.read_csv("./HCAIM_Challenge/data/res_train.csv")
+    data = data.sample(10000)
 
     # Ensure that generator is one of the accepted methods
     if generator not in ['MWEM','PATE-CTGAN','DP-CTGAN']:
