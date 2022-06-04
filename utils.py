@@ -3,7 +3,7 @@ import pandas as pd
 
 def get_generator(generator, epsilon):
 
-    data = pd.read_csv("./data/res_train.csv")
+    data = pd.read_csv("./HCAIM_Challenge/data/res_train.csv")
 
     # Ensure that generator is one of the accepted methods
     if generator not in ['MWEM','PATE-CTGAN','DP-CTGAN']:
@@ -60,7 +60,7 @@ def evaluate_model(model):
 
     from sklearn.metrics import classification_report
 
-    test_data = pd.read_csv('./data/test.csv')
+    test_data = pd.read_csv('./HCAIM_Challenge/data/test.csv')
 
     x = test_data.drop('HeartDisease',axis=1)
 
