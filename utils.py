@@ -3,34 +3,34 @@ import pandas as pd
 
 def get_generator(generator, epsilon):
 
-	data = pd.read_csv("./data/res_train.csv")
+    data = pd.read_csv("./data/res_train.csv")
 
-	# Ensure that generator is one of the accepted methods
-	if generator not in ['MWEM','PATE-CTGAN','DP-CTGAN']:
+    # Ensure that generator is one of the accepted methods
+    if generator not in ['MWEM','PATE-CTGAN','DP-CTGAN']:
 
-		print(f"{generator} not in list of accepted methods. Please use one of MWEM, PATE-CTGAN or DP-CTGAN")
-		return
+        print(f"{generator} not in list of accepted methods. Please use one of MWEM, PATE-CTGAN or DP-CTGAN")
+        return
 
-	# Make sure epsilon is an acceptable size
-	if (epsilon < 0.5) or (epsilon > 10):
+    # Make sure epsilon is an acceptable size
+    if (epsilon < 0.5) or (epsilon > 10):
 
-		print("Please enter an epsilon value between 0.5 and 10")
-		return
+        print("Please enter an epsilon value between 0.5 and 10")
+        return
 
-	if generator == "MWEM":
+    if generator == "MWEM":
 
 
-		nf = data.to_numpy().astype(int)
+        nf = data.to_numpy().astype(int)
 
-		synth = snsynth.MWEMSynthesizer(epsilon=epsilon, split_factor=nf.shape[1]) 
+        synth = snsynth.MWEMSynthesizer(epsilon=epsilon, split_factor=nf.shape[1]) 
 
-		synth.fit(nf)
+        synth.fit(nf)
 
-		return synth
+        return synth
 
-	elif generator == "PATE-CTGAN":
+    elif generator == "PATE-CTGAN":
 
-		from snsynth.pytorch.nn import PATECTGAN
+        from snsynth.pytorch.nn import PATECTGAN
         from snsynth.pytorch import PytorchDPSynthesizer
 
         synth = PytorchDPSynthesizer(epsilon, PATECTGAN(regularization='dragan'), None)
@@ -41,7 +41,7 @@ def get_generator(generator, epsilon):
 
     elif generator == "DP-CTGAN":
 
-		from snsynth.pytorch.nn import DPCTGAN
+        from snsynth.pytorch.nn import DPCTGAN
         from snsynth.pytorch import PytorchDPSynthesizer
 
         synth = PytorchDPSynthesizer(epsilon, DPCTGAN(), None)
@@ -58,19 +58,19 @@ def get_generator(generator, epsilon):
 
 def evaluate_model(model):
 
-	from sklearn.metrics import classification_report
+    from sklearn.metrics import classification_report
 
-	test_data = pd.read_csv('./data/test.csv')
+    test_data = pd.read_csv('./data/test.csv')
 
-	x = test_data.drop('HeartDisease',axis=1)
+    x = test_data.drop('HeartDisease',axis=1)
 
-	y = test_data['HeartDisease']
+    y = test_data['HeartDisease']
 
-	y_pred = model.predict(x)
+    y_pred = model.predict(x)
 
-	clr = classification_report(y, y_pred)
+    clr = classification_report(y, y_pred)
 
-	return clr
+    return clr
 
 
 
