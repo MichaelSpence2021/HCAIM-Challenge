@@ -3,7 +3,7 @@ import pandas as pd
 
 def get_generator(generator, epsilon, training_samples=10000):
 
-    data = pd.read_csv("./HCAIM_Challenge/data/res_train.csv")
+    data = pd.read_csv("./HCAIM_Challenge/data/res_train.csv",index_col = 0)
     data = data.sample(training_samples)
 
     # Ensure that generator is one of the accepted methods
@@ -61,7 +61,7 @@ def evaluate_model(model):
 
     from sklearn.metrics import classification_report
 
-    test_data = pd.read_csv('./HCAIM_Challenge/data/test.csv')
+    test_data = pd.read_csv('./HCAIM_Challenge/data/test.csv',index_col=0)
 
     x = test_data.drop('HeartDisease',axis=1)
 
