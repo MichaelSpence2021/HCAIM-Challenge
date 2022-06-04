@@ -61,7 +61,7 @@ def evaluate_model(model):
 
     from sklearn.metrics import classification_report
 
-    test_data = pd.read_csv('./HCAIM_Challenge/data/test.csv',index_col=0)
+    test_data = pd.read_csv('./HCAIM_Challenge/data/res_test.csv',index_col=0)
 
     x = test_data.drop('HeartDisease',axis=1)
 
