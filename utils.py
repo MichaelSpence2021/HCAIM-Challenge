@@ -3,6 +3,10 @@ import pandas as pd
 
 def get_generator(generator, epsilon, training_samples=10000):
 
+    # update score
+
+    update_score(epsilon,accuracy=0)
+
     data = pd.read_csv("./HCAIM_Challenge/data/res_train.csv",index_col = 0)
     data = data.sample(training_samples)
 
@@ -59,7 +63,7 @@ def get_generator(generator, epsilon, training_samples=10000):
 
 def evaluate_model(model):
 
-    from sklearn.metrics import classification_report
+    from sklearn.metrics import classification_report, accuracy_score
 
     test_data = pd.read_csv('./HCAIM_Challenge/data/res_test.csv',index_col=0)
 
@@ -70,8 +74,31 @@ def evaluate_model(model):
     y_pred = model.predict(x)
 
     clr = classification_report(y, y_pred)
+    acc = accuracy_score(y,y_pred)
+
+    update_score(epsilon=0,accuracy = acc)
 
     return clr
+
+
+def update_score(epsilon, accuracy):
+
+    import json
+
+    path = './HCAIM_Challenge/score_status.json'
+
+    with open(path,'r+') as f:
+        data = json.load(f)
+
+        data['total epsilon'] += epsilon
+
+        if accuracy > data['best accuracy']:
+
+            data['best accuracy'] = accuracy
+
+        f.seek(0)        # <--- should reset file position to the beginning.
+        json.dump(data, f, indent=4)
+        f.truncate()     # remove remaining part
 
 
 
