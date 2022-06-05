@@ -109,5 +109,8 @@ def update_score(epsilon, accuracy):
 
 def check_score():
 
-    print('temp')
+    path = './HCAIM_Challenge/score_status.json'
+    with open(path,'r+') as f:
+        data = json.load(f)
+        print(data)
 
